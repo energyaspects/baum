@@ -413,9 +413,9 @@ abstract class Node extends Model
         $instance = new static;
 
         return $instance->newQuery()
-                        ->whereNull($instance->getParentColumnName())
-                        ->orWhere($instance->getParentColumnName(), 0)
-                        ->orderBy($instance->getQualifiedOrderColumnName());
+            ->whereNull($instance->getParentColumnName())
+            ->orWhere($instance->getParentColumnName(), 0)
+            ->orderBy($instance->getQualifiedOrderColumnName());
     }
 
     /**
@@ -454,10 +454,10 @@ abstract class Node extends Model
         $lftCol = $grammar->wrap($instance->getQualifiedLeftColumnName());
 
         return $instance->newQuery()
-                        ->whereNotNull($instance->getParentColumnName())
-                        ->where($instance->getParentColumnName(), '!=', 0)
-                        ->whereRaw($rgtCol.' - '.$lftCol.' != 1')
-                        ->orderBy($instance->getQualifiedOrderColumnName());
+            ->whereNotNull($instance->getParentColumnName())
+            ->where($instance->getParentColumnName(), '!=', 0)
+            ->whereRaw($rgtCol.' - '.$lftCol.' != 1')
+            ->orderBy($instance->getQualifiedOrderColumnName());
     }
 
     /**
@@ -759,9 +759,9 @@ abstract class Node extends Model
         $lftCol = $grammar->wrap($this->getQualifiedLeftColumnName());
 
         return $this->descendants()
-                    ->whereNotNull($this->getQualifiedParentColumnName())
-                    ->where($this->getQualifiedParentColumnName(), '!=', 0)
-                    ->whereRaw($rgtCol.' - '.$lftCol.' != 1');
+            ->whereNotNull($this->getQualifiedParentColumnName())
+            ->where($this->getQualifiedParentColumnName(), '!=', 0)
+            ->whereRaw($rgtCol.' - '.$lftCol.' != 1');
     }
 
     /**
