@@ -59,7 +59,7 @@ class SetBuilder
   public function roots()
   {
       return $this->node->newQuery()
-      ->whereNull($this->node->getQualifiedParentColumnName())
+      ->where($this->node->getQualifiedParentColumnName(), null)
       ->orWhere($this->node->getQualifiedParentColumnName(), 0)
       ->orderBy($this->node->getQualifiedLeftColumnName())
       ->orderBy($this->node->getQualifiedRightColumnName())
