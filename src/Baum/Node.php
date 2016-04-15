@@ -596,7 +596,7 @@ abstract class Node extends Model
         } else {
             $parentId = $this->getParentId();
 
-            if ((!is_null($parentId) && $parentId!=0) && $currentParent = static::find($parentId)) {
+            if (!is_null($parentId) && $parentId!=0 && $currentParent = static::find($parentId)) {
                 return $currentParent->getRoot();
             } else {
                 return $this;
@@ -1171,7 +1171,7 @@ abstract class Node extends Model
     {
         $pid = static::$moveToNewParentId;
 
-        if (is_null($pid) || $pid == 0) {
+        if (is_null($pid) || $pid === 0) {
            $this->makeRoot();
         } elseif ($pid !== false) {
             $this->makeChildOf($pid);
