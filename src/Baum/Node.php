@@ -413,9 +413,9 @@ abstract class Node extends Model
         $instance = new static;
 
         return $instance->newQuery()
-                        ->whereNull($instance->getParentColumnName())
-                        ->orWhere($instance->getParentColumnName(), 0)
-                        ->orderBy($instance->getQualifiedOrderColumnName());
+            ->whereNull($instance->getParentColumnName())
+            ->orWhere($instance->getParentColumnName(), 0)
+            ->orderBy($instance->getQualifiedOrderColumnName());
     }
 
     /**
@@ -454,10 +454,10 @@ abstract class Node extends Model
         $lftCol = $grammar->wrap($instance->getQualifiedLeftColumnName());
 
         return $instance->newQuery()
-                        ->whereNotNull($instance->getParentColumnName())
-                        ->where($instance->getParentColumnName(), '!=', 0)
-                        ->whereRaw($rgtCol.' - '.$lftCol.' != 1')
-                        ->orderBy($instance->getQualifiedOrderColumnName());
+            ->whereNotNull($instance->getParentColumnName())
+            ->where($instance->getParentColumnName(), '!=', 0)
+            ->whereRaw($rgtCol.' - '.$lftCol.' != 1')
+            ->orderBy($instance->getQualifiedOrderColumnName());
     }
 
     /**
@@ -596,7 +596,7 @@ abstract class Node extends Model
         } else {
             $parentId = $this->getParentId();
 
-            if ((!is_null($parentId) && $parentId!=0) && $currentParent = static::find($parentId)) {
+            if (!is_null($parentId) && $parentId!=0 && $currentParent = static::find($parentId)) {
                 return $currentParent->getRoot();
             } else {
                 return $this;
@@ -759,9 +759,9 @@ abstract class Node extends Model
         $lftCol = $grammar->wrap($this->getQualifiedLeftColumnName());
 
         return $this->descendants()
-                    ->whereNotNull($this->getQualifiedParentColumnName())
-                    ->where($this->getQualifiedParentColumnName(), '!=', 0)
-                    ->whereRaw($rgtCol.' - '.$lftCol.' != 1');
+            ->whereNotNull($this->getQualifiedParentColumnName())
+            ->where($this->getQualifiedParentColumnName(), '!=', 0)
+            ->whereRaw($rgtCol.' - '.$lftCol.' != 1');
     }
 
     /**
@@ -1136,7 +1136,7 @@ abstract class Node extends Model
     */
     public function setDefaultLeftAndRight()
     {
-        $withHighestRight = $this->newNestedSetQuery()->reOrderBy($this->getRightColumnName(), 'desc')->take(1)->sharedLock()->first();
+        $withHighestRight = $this->newNestedSetQuery()->orderBy($this->getRightColumnName(), 'desc')->take(1)->sharedLock()->first();
 
         $maxRgt = 0;
         if (! is_null($withHighestRight)) {
@@ -1171,7 +1171,7 @@ abstract class Node extends Model
     {
         $pid = static::$moveToNewParentId;
 
-        if (is_null($pid) || $pid == 0) {
+        if (is_null($pid) || $pid === 0) {
            $this->makeRoot();
         } elseif ($pid !== false) {
             $this->makeChildOf($pid);
